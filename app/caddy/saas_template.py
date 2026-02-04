@@ -82,7 +82,7 @@ def route_template(domain, upstream, disable_https=False):
                 "routes": [
                     {
                         "handle": [
-                            reverse_proxy_handle_template(upstream, disable_https=disable_https)
+                            reverse_proxy_handle_template(upstream, domain, disable_https=disable_https)
                         ]
                     }
                 ]
