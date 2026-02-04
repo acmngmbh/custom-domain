@@ -97,7 +97,7 @@ def route_template(domain, upstream, disable_https=False):
     }
 
 
-def reverse_proxy_handle_template(upstream, disable_https=False, handle_id=None):
+def reverse_proxy_handle_template(upstream, domain, disable_https=False, handle_id=None):
     if ":" not in upstream:
         upstream = f"{upstream}:{HTTPS_PORT}"
 
@@ -109,11 +109,13 @@ def reverse_proxy_handle_template(upstream, disable_https=False, handle_id=None)
                     "Host": [
                         "{http.reverse_proxy.upstream.host}"
                     ],
+                    "X-Forwarded-Host": [domain],
+                    "X-Custom-Domain": [domain],   # optional, aber eindeutig
                     "X-Real-Host": [
                         "{http.reverse_proxy.upstream.host}"
                     ],
                     "X-Real-Ip": [
-                        "{http.reverse-proxy.upstream.address}"
+                        "{http.reverse-proxy.remote.host}"
                     ]
                 }
             }
